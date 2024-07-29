@@ -5,7 +5,7 @@ create table users(
     username varchar not null,
     password varchar not null,
     lastLogin varchar,
-    userPlatform varchar,
+    userPlatform varchar
 );
 create index user_idx on users (phone_number);
 
