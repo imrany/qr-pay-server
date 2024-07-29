@@ -11,13 +11,14 @@ export const registerUser=async(req:Req,res:any)=>{
             const hashedPassword=await hash(password,salt);
             pool.query('INSERT INTO users (username, phone_number, password, lastLogin, userPlatform) VALUES ($1, $2, $3, $4, $5) RETURNING *', [username, phone_number, hashedPassword, lastLogin, userPlatform], async(error:any, results) => {
                 if (error) {
+                    console.log(error)
                     res.status(408).send({error:`Account already exist!`})
                 }else{
                     res.status(201).send({
                         msg:`Welcome ${results.rows[0].username}`,
                         data:{
                             username:results.rows[0].username,
-                            phone_number:results.rows[0].email,
+                            phone_number:results.rows[0].phone_number,
                             access_token:generateUserToken(results.rows[0].id)
                         }
                     })
@@ -42,7 +43,7 @@ export const loginUser=async(req:Req,res:any)=>{
                     res.status(400).send({error:'Failed to sign in, try again!'})
                 }else{
                     if(results.rows[0]){
-                        if (results.rows[0].email&&await compare(password,results.rows[0].password)) {
+                        if (results.rows[0].phone_number&&await compare(password,results.rows[0].password)) {
                             pool.query('UPDATE users SET lastLogin = $1, userPlatform = $2 WHERE phone_number = $3 RETURNING *',[lastLogin,userPlatform,results.rows[0].phone_number],(error,results)=>{
                                 if(error){
                                     console.log(error)
@@ -51,8 +52,8 @@ export const loginUser=async(req:Req,res:any)=>{
                                         msg:`Welcome ${results.rows[0].username}`,
                                         data:{
                                             username:results.rows[0].username,
-                                            phone_number:results.rows[0].email,
-                                            access_token:results.rows[0].access_token,
+                                            phone_number:results.rows[0].phone_number,
+                                            access_token:generateUserToken(results.rows[0].id)
                                         }
                                     })
                                 }

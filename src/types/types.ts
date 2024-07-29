@@ -1,6 +1,6 @@
 export interface Req{
     body:{
-        username:string,
+        username?:string,
         phone_number:string,
         password:string,
         lastLogin?:string,

@@ -1,11 +1,10 @@
 -- Add up migration script here
 create table users(
     phone_number varchar not null primary key,
-    access_token varchar,
     username varchar not null,
     password varchar not null,
-    lastLogin varchar,
-    userPlatform varchar
+    lastLogin varchar not null,
+    userPlatform varchar not null
 );
 create index user_idx on users (phone_number);
 
