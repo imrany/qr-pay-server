@@ -5,7 +5,7 @@ import { verify, sign } from "jsonwebtoken"
 
 export const registerUser=async(req:Req,res:any)=>{
     try {
-        const {username,phone_number,password,lastLogin,userPlatform}=req.body.data;
+        const {username,phone_number,password,lastLogin,userPlatform}=req.body;
         if (username&&phone_number&&password) {
             const salt=await genSalt(10);
             const hashedPassword=await hash(password,salt);
@@ -34,7 +34,7 @@ export const registerUser=async(req:Req,res:any)=>{
 
 export const loginUser=async(req:Req,res:any)=>{
     try {
-        const {phone_number,password,lastLogin,userPlatform}=req.body.data;
+        const {phone_number,password,lastLogin,userPlatform}=req.body;
         if(phone_number&&password&&lastLogin&&userPlatform){
             pool.query('SELECT * FROM users WHERE phone_number = $1',[phone_number],async (error,results)=>{
                 if(error){
