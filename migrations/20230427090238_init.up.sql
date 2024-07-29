@@ -1,64 +1,14 @@
 -- Add up migration script here
 create table users(
-    email varchar not null primary key,
-    folder_id varchar,
+    phone_number varchar not null primary key,
     access_token varchar,
-    group_folder_id varchar,
     username varchar not null,
     password varchar not null,
-    provider varchar,
-    photo varchar,
     lastLogin varchar,
-    ipAddress varchar,
     userPlatform varchar,
-    group_ownership varchar
 );
-create index user_idx on users (email);
+create index user_idx on users (phone_number);
 
--- user_uploads table
-create table user_uploads(
-    filename varchar not null primary key,
-    email varchar not null,
-    allowedEmails varchar[],
-    username varchar not null,
-    uploadedAt varchar,
-    size varchar,
-    file varchar,
-    type varchar
-);
-create index user_uploads_idx on user_uploads (email);
-
--- group table
-create table groups(
-    email varchar not null primary key,
-    groupname varchar not null unique,
-    folder_id varchar,
-    access_token varchar,
-    grouptype varchar not null,
-    provider varchar,
-    photo varchar,
-    privacy boolean,
-    lastLogin varchar,
-    ipAddress varchar,
-    userPlatform varchar,
-    members varchar[]
-);
-create index group_idx on groups (email);
-
--- group_uploads table
-create table group_uploads(
-    filename varchar not null,
-    email varchar not null,
-    allowedEmails varchar[],
-    groupname varchar not null,
-    uploadedAt varchar,
-    size varchar,
-    privacy boolean,
-    file varchar primary key,
-    type varchar
-);
-create index group_uploads_idx on group_uploads (email);
---  BYTEA
 -- transaction
 -- create table mpesa_transactions(
 --     phoneNumber int not null,

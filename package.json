@@ -1,7 +1,7 @@
 {
-  "name": "wekafila-api",
-  "version": "2.0.3",
-  "description": "Manage and share files.",
+  "name": "qr-pay-server",
+  "version": "0.0.1",
+  "description": "Serve qr-pay.",
   "main": "./build/index.js",
   "engines": {
     "node": ">=18.0.0"
@@ -31,7 +31,6 @@
     "googleapis": "^126.0.1",
     "jsonwebtoken": "^9.0.1",
     "multer": "^1.4.5-lts.1",
-    "nodemailer": "^6.9.4",
     "pg": "^8.11.3",
     "socket.io": "^4.7.0"
   },
@@ -44,7 +43,6 @@
     "@types/jsonwebtoken": "^9.0.2",
     "@types/multer": "^1.4.7",
     "@types/node": "^20.8.2",
-    "@types/nodemailer": "^6.4.9",
     "@types/pg": "^8.10.2",
     "nodemon": "^2.0.22",
     "tailwindcss": "^3.3.1",
