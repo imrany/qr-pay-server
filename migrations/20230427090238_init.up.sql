@@ -8,6 +8,22 @@ create table users(
 );
 create index user_idx on users (phone_number);
 
+create table students(
+    phone_number varchar,
+    full_name varchar not null,
+    type:varchar not null,
+    registration_number:varchar not null primary key,
+    id_number:varchar,
+    year_of_entry:varchar not null,
+    year_of_exit:varchar not null,
+    academic_year:varchar not null,
+    semester: int not null,
+    campus:varchar not null,
+    course:varchar not null
+);
+create index student_idx on students (id_number);
+
+
 -- transaction
 -- create table mpesa_transactions(
 --     phoneNumber int not null,
