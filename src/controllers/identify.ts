@@ -29,6 +29,7 @@ export const getDetails=async(req:any,res:any)=>{
                                         campus:std_results.rows[0].campus,
                                         course:std_results.rows[0].course,
                                         phone_number:std_results.rows[0].phone_number,
+                                        school:std_results.rows[0].school
                                     }
                                 })
                             }
@@ -49,9 +50,9 @@ export const getDetails=async(req:any,res:any)=>{
 
 export const addDetails=async(req:any,res:any)=>{
     try {
-        const {full_name, registration_number,type,id_number,year_of_entry,year_of_exit,academic_year,semester,campus,course,phone_number}=req.body;
+        const {full_name, school, registration_number,type,id_number,year_of_entry,year_of_exit,academic_year,semester,campus,course,phone_number}=req.body;
         if (full_name&&registration_number&&type&&year_of_entry&&year_of_exit&&academic_year&&semester&&campus&&course) {
-            pool.query('INSERT INTO students (full_name, registration_number,type,id_number,year_of_entry,year_of_exit,academic_year,semester,campus,course,phone_number) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING *', [full_name, registration_number,type,id_number,year_of_entry,year_of_exit,academic_year,semester,campus,course,phone_number], async(error:any, results) => {
+            pool.query('INSERT INTO students (full_name, registration_number,type,id_number,year_of_entry,year_of_exit,academic_year,semester,campus,course,phone_number, school) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *', [full_name, registration_number,type,id_number,year_of_entry,year_of_exit,academic_year,semester,campus,course,phone_number, school], async(error:any, results) => {
                 if (error) {
                     console.log(error)
                     res.status(408).send({error:`This student already exist!`})
@@ -69,7 +70,8 @@ export const addDetails=async(req:any,res:any)=>{
                             campus:results.rows[0].campus,
                             course:results.rows[0].course,
                             full_name:results.rows[0].full_name,
-                            phone_number:results.rows[0].phone_number
+                            phone_number:results.rows[0].phone_number,
+                            school:results.rows[0].school,
                         }
                     })
                 }
