@@ -3,34 +3,39 @@ import pool from "../pg";
 export const getDetails=async(req:any,res:any)=>{
     try {
         const { registration_number, access_time } =req.body;
-        pool.query('SELECT * FROM students WHERE registration_number=$1',[registration_number], (error, results) => {
+        pool.query('SELECT * FROM students WHERE registration_number= $1',[registration_number], (error, results) => {
             if (error) {
                 console.log(error)
                 res.status(404).send({error:`You are not authorized!`})
             }else{ 
-                if(results.rows[0].registration_number){
-                    pool.query('INSERT INTO access_records (registration_number, access_time) VALUES ($1, $2)',[results.rows[0].registration_number,access_time],(error,results)=>{
-                        if(error){
-                            console.log(error)
-                            res.status(505).send({error:"Failed to authorize, try again!"})
-                        }else{
-                            res.status(200).json({
-                                data:{
-                                    full_name:results.rows[0].full_name,
-                                    registration_number:results.rows[0].registration_number,
-                                    type:results.rows[0].type,
-                                    id_number:results.row[0].id_number,
-                                    year_of_entry:results.rows[0].year_of_entry,
-                                    year_of_exit:results.rows[0].year_of_exit,
-                                    academic_year:results.rows[0].academic_year,
-                                    semester:results.rows[0].semester,
-                                    campus:results.rows[0].campus,
-                                    course:results.rows[0].course,
-                                    phone_number:results.rows[0].phone_number,
-                                }
-                            })
-                        }
-                    })
+                let std_results=results
+                if(results.rows.length!==0){
+                    if(results.rows[0].registration_number){
+                        pool.query('INSERT INTO access_records (registration_number, access_time) VALUES ($1, $2)',[results.rows[0].registration_number,access_time],(error,results)=>{
+                            if(error){
+                                console.log(error)
+                                res.status(505).send({error:"Failed to authorize, try again!"})
+                            }else{
+                                res.status(200).json({
+                                    data:{
+                                        full_name:std_results.rows[0].full_name,
+                                        registration_number:std_results.rows[0].registration_number,
+                                        type:std_results.rows[0].type,
+                                        id_number:std_results.rows[0].id_number,
+                                        year_of_entry:std_results.rows[0].year_of_entry,
+                                        year_of_exit:std_results.rows[0].year_of_exit,
+                                        academic_year:std_results.rows[0].academic_year,
+                                        semester:std_results.rows[0].semester,
+                                        campus:std_results.rows[0].campus,
+                                        course:std_results.rows[0].course,
+                                        phone_number:std_results.rows[0].phone_number,
+                                    }
+                                })
+                            }
+                        })
+                    }else{
+                        res.status(401).send({error:"You are not authorized"})
+                    }
                 }else{
                     res.status(401).send({error:"You are not authorized"})
                 }
@@ -55,7 +60,7 @@ export const addDetails=async(req:any,res:any)=>{
                         msg:`Welcome ${results.rows[0].full_name}`,
                         data:{
                             registration_number:results.rows[0].registration_number,
-                            type:results.rows[0].type
+                            type:results.rows[0].type,
                             id_number:results.rows[0].id_number,
                             year_of_entry:results.rows[0].year_of_entry,
                             year_of_exit:results.rows[0].year_of_exit,
