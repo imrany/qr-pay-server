@@ -18,8 +18,9 @@ create table students(
     year_of_exit varchar(4) not null,
     academic_year varchar(10) not null,
     semester int not null,
-    campus varchar(100) not null,
-    course varchar(255) not null
+    campus varchar(100) DEFAULT 'MAIN',
+    course varchar(255) not null,
+    school varchar(300) not null
 );
 create index student_idx on students (registration_number);
 
