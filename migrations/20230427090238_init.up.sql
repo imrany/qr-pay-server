@@ -9,20 +9,27 @@ create table users(
 create index user_idx on users (phone_number);
 
 create table students(
-    phone_number varchar,
-    full_name varchar not null,
-    type:varchar not null,
-    registration_number:varchar not null primary key,
-    id_number:varchar,
-    year_of_entry:varchar not null,
-    year_of_exit:varchar not null,
-    academic_year:varchar not null,
-    semester: int not null,
-    campus:varchar not null,
-    course:varchar not null
+    phone_number varchar(14),
+    full_name varchar(255) not null,
+    type varchar(10) DEFAULT 'student' not null,
+    registration_number varchar(100) not null primary key,
+    id_number varchar(30) unique,
+    year_of_entry varchar(4) not null,
+    year_of_exit varchar(4) not null,
+    academic_year varchar(10) not null,
+    semester int not null,
+    campus varchar(100) not null,
+    course varchar(255) not null
 );
-create index student_idx on students (id_number);
+create index student_idx on students (registration_number);
 
+create table access_records(
+    registration_number varchar(100) not null,
+    access_time date not null,
+    PRIMARY KEY (access_time),
+    FOREIGN KEY (registration_number) REFERENCES students(registration_number)
+);
+create index access_record_idx on access_records (access_time);
 
 -- transaction
 -- create table mpesa_transactions(
