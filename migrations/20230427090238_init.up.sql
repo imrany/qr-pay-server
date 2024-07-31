@@ -25,7 +25,7 @@ create index student_idx on students (registration_number);
 
 create table access_records(
     registration_number varchar(100) not null,
-    access_time date not null,
+    access_time varchar not null,
     PRIMARY KEY (access_time),
     FOREIGN KEY (registration_number) REFERENCES students(registration_number)
 );
