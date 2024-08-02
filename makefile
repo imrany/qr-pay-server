@@ -1,5 +1,5 @@
-all: clean build  
-# .DEFAULT_GOAL:=build
+#all: clean build  
+.DEFAULT_GOAL:=build
 # .PHONY: build copy 
 # variable
 B= npm
