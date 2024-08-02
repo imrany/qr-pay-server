@@ -6,7 +6,7 @@ import router from "./routes/api"
 config()
 
 const cors_option = {
-    origin:["http://localhost:3000","https://kenya-qr-pay.web.app"],
+    origin:["http://localhost:3000","https://kenya-qr-pay.web.app","https://std-identify.web.app"],
     methods: ["GET", "POST", "DELETE", "UPDATE", "PATCH", "PUT"]
 }
 
