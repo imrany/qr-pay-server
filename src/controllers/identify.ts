@@ -85,3 +85,18 @@ export const addDetails=async(req:any,res:any)=>{
     }
 }
 
+export async function trackAccess(req:any,res:any){
+    try{
+        pool.query('SELECT students.registration_number, students.full_name, students.type, students.academic_year, students.semester, students.campus, students.school, students.course, students.phone_number, access_records.access_time FROM access_records INNER JOIN students ON students.registration_number=access_records.registration_number', (error, results) => {
+                if (error) {
+                    console.log(error)
+                    res.status(500).send({error:`${error.message}`})
+                }else{
+                    res.status(201).send({data:results.rows})
+                }
+            }
+        )
+    }catch(error:any){
+        res.status(500).send({error:error.message})
+    }
+}

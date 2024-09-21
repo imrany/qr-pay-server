@@ -1,6 +1,6 @@
 import express from "express"
 import { getUser, deleteUser, getUsers, loginUser, protectUser, registerUser, updateUser } from "../controllers/user";
-import { getDetails, addDetails } from "../controllers/identify";
+import { getDetails, addDetails, trackAccess } from "../controllers/identify";
 const router=express.Router()
 
 router.post("/auth/sign_up",registerUser)
@@ -13,5 +13,8 @@ router.delete("/users/:phone_number",protectUser,deleteUser)
 //Identify routes
 router.post("/identify",getDetails)
 router.post("/identify/add",addDetails)
+
+//admin routes
+router.get("/admin/track_access",trackAccess)
 
 export default router
